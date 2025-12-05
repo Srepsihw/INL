@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>attention</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        /* 第一行大字样式 */
+        .main-headline {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 2.5rem;
+            letter-spacing: -0.5px;
+            color: #111;
+        }
+        
+        /* 下划线样式 */
+        .underline {
+            display: inline-block;
+            min-width: 30px;
+            border-bottom: 4px solid #333;
+            margin: 0 5px;
+            text-align: center;
+        }
+        
+        /* 第二行输入区域 */
+        .input-section {
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .answer-input {
+            padding: 12px 20px;
+            font-size: 1.2rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            width: 200px;
+            transition: all 0.3s ease;
+        }
+        
+        .answer-input:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+        
+        .submit-btn {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: #3d8b40;
+        }
+        
+        /* 第三行信息（初始隐藏） */
+        .third-line {
+            font-size: 1.8rem;
+            color: #2196f3;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .third-line.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 图片区域 */
+        .image-container {
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
+        }
+        
+        .image-container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .result-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .main-headline {
+                font-size: 3rem;
+            }
+            
+            .input-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .answer-input, .submit-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-headline {
+                font-size: 2.2rem;
+            }
+            
+            .third-line {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-headline">
+            W<span class="underline">_</span>y u d<span class="underline">_</span> t<span class="underline">_</span><span class="underline">_</span>?
+        </h1>
+        
+        <div class="input-section">
+            <input type="text" class="answer-input" id="answerInput" placeholder="输入答案" maxlength="7">
+            <button class="submit-btn" id="submitBtn">Submit</button>
+        </div>
+        
+        <div class="third-line" id="thirdLine">Fine, please mapping.</div>
+        
+        <div class="image-container" id="imageContainer">
+            <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEMOSFpMv8oWl1eiK0lLHnRNnOb7wABcQMAAvYnAAIUpJlVKcHjnj8X8tc2BA.jpg" 
+                 alt="test" class="result-image">
+        </div>
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const answerInput = document.getElementById('answerInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const thirdLine = document.getElementById('thirdLine');
+        const imageContainer = document.getElementById('imageContainer');
+        
+        // 正确答案
+        const correctAnswer = '4FUNOFC';
+        
+        // 提交按钮点击事件
+        submitBtn.addEventListener('click', checkAnswer);
+        
+        // 输入框回车键事件
+        answerInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+        
+        // 检查答案函数
+        function checkAnswer() {
+            const userAnswer = answerInput.value.trim().toUpperCase();
+            
+            if (userAnswer === correctAnswer) {
+                // 显示第三行
+                thirdLine.classList.add('show');
+                
+                // 显示图片
+                imageContainer.classList.add('show');
+                
+                // 输入框和按钮状态更新
+                answerInput.style.borderColor = '#4caf50';
+                answerInput.style.backgroundColor = '#f0fff0';
+                submitBtn.textContent = '正确!';
+                submitBtn.style.backgroundColor = '#4caf50';
+            } else {
+                // 答案错误的效果
+                answerInput.style.borderColor = '#f44336';
+                answerInput.style.backgroundColor = '#fff5f5';
+                
+                // 按钮震动效果
+                submitBtn.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    submitBtn.style.animation = '';
+                }, 500);
+                
+                // 清空输入框
+                setTimeout(() => {
+                    answerInput.value = '';
+                    answerInput.style.borderColor = '#ddd';
+                    answerInput.style.backgroundColor = 'white';
+                }, 800);
+            }
+        }
+    </script>
+</body>
+</html>
