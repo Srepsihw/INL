@@ -1,1 +1,1 @@
-La plej danĝera loko estas la plej sekura loko
+Periculosissimus locus tutissimus est.
