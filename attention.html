@@ -13,8 +13,8 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: #000000; /* 改为黑色背景 */
+            color: #f0f0f0; /* 文字改为浅色以适应黑色背景 */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -36,14 +36,14 @@
             font-weight: 800;
             margin-bottom: 2.5rem;
             letter-spacing: 1.5px; /* 增加字母间距 */
-            color: #111;
+            color: #ffffff; /* 白色文字 */
             word-spacing: 12px; /* 增加单词间距 */
         }
         
         /* 下划线样式 - 改为与文字相同的样式 */
         .underline-char {
             font-weight: 800;
-            color: #111;
+            color: #ffffff; /* 白色文字 */
             letter-spacing: 1.5px; /* 与整体保持一致 */
         }
         
@@ -60,16 +60,22 @@
         .answer-input {
             padding: 12px 20px;
             font-size: 1.2rem;
-            border: 2px solid #ddd;
+            border: 2px solid #555; /* 改为深色边框 */
             border-radius: 8px;
             width: 200px;
             transition: all 0.3s ease;
+            background-color: #222; /* 输入框背景改为深色 */
+            color: #ffffff; /* 输入文字改为白色 */
+        }
+        
+        .answer-input::placeholder {
+            color: #aaa; /* 占位符文字颜色 */
         }
         
         .answer-input:focus {
             outline: none;
             border-color: #4caf50;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2); /* 调整焦点阴影颜色 */
         }
         
         .submit-btn {
@@ -90,7 +96,7 @@
         /* 第三行信息（初始隐藏） */
         .third-line {
             font-size: 1.8rem;
-            color: #2196f3;
+            color: #2196f3; /* 蓝色文字在黑色背景上更显眼 */
             font-weight: 600;
             margin-bottom: 2rem;
             opacity: 0;
@@ -120,7 +126,7 @@
             max-width: 100%;
             height: auto;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* 调整阴影颜色 */
         }
         
         /* 响应式设计 */
@@ -166,7 +172,7 @@
             <button class="submit-btn" id="submitBtn">Submit</button>
         </div>
         
-        <div class="third-line" id="thirdLine">Fine, please be careful.</div>
+        <div class="third-line" id="thirdLine">Fine, please mapping.</div>
         
         <div class="image-container" id="imageContainer">
             <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEMO0FpM4aGXvd5cDSngge15A3Doa--1AACLBcAAhSkoVVIzCtKqDt5EDYE.png" 
@@ -207,13 +213,13 @@
                 
                 // 输入框和按钮状态更新
                 answerInput.style.borderColor = '#4caf50';
-                answerInput.style.backgroundColor = '#f0fff0';
+                answerInput.style.backgroundColor = '#1a3d1a';
                 submitBtn.textContent = 'Correct!';
                 submitBtn.style.backgroundColor = '#4caf50';
             } else {
                 // 答案错误的效果
                 answerInput.style.borderColor = '#f44336';
-                answerInput.style.backgroundColor = '#fff5f5';
+                answerInput.style.backgroundColor = '#3d1a1a';
                 
                 // 按钮震动效果
                 submitBtn.style.animation = 'shake 0.5s';
@@ -224,8 +230,8 @@
                 // 清空输入框
                 setTimeout(() => {
                     answerInput.value = '';
-                    answerInput.style.borderColor = '#ddd';
-                    answerInput.style.backgroundColor = 'white';
+                    answerInput.style.borderColor = '#555';
+                    answerInput.style.backgroundColor = '#222';
                 }, 800);
             }
         }
