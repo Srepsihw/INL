@@ -30,22 +30,21 @@
             text-align: center;
         }
         
-        /* 第一行大字样式 */
+        /* 第一行大字样式 - 增加字母间距 */
         .main-headline {
             font-size: 4rem;
             font-weight: 800;
             margin-bottom: 2.5rem;
-            letter-spacing: -0.5px;
+            letter-spacing: 1.5px; /* 增加字母间距 */
             color: #111;
+            word-spacing: 12px; /* 增加单词间距 */
         }
         
-        /* 下划线样式 */
-        .underline {
-            display: inline-block;
-            min-width: 30px;
-            border-bottom: 4px solid #333;
-            margin: 0 5px;
-            text-align: center;
+        /* 下划线样式 - 改为与文字相同的样式 */
+        .underline-char {
+            font-weight: 800;
+            color: #111;
+            letter-spacing: 1.5px; /* 与整体保持一致 */
         }
         
         /* 第二行输入区域 */
@@ -128,6 +127,8 @@
         @media (max-width: 768px) {
             .main-headline {
                 font-size: 3rem;
+                letter-spacing: 1px;
+                word-spacing: 8px;
             }
             
             .input-section {
@@ -144,6 +145,8 @@
         @media (max-width: 480px) {
             .main-headline {
                 font-size: 2.2rem;
+                letter-spacing: 0.5px;
+                word-spacing: 6px;
             }
             
             .third-line {
@@ -155,19 +158,19 @@
 <body>
     <div class="container">
         <h1 class="main-headline">
-            W<span class="underline">_</span>y u d<span class="underline">_</span> t<span class="underline">_</span><span class="underline">_</span>?
+            W<span class="underline-char">_</span>y&nbsp;&nbsp;&nbsp;u&nbsp;&nbsp;&nbsp;d<span class="underline-char">_</span>&nbsp;&nbsp;&nbsp;t<span class="underline-char">_</span><span class="underline-char">_</span>s?
         </h1>
         
         <div class="input-section">
-            <input type="text" class="answer-input" id="answerInput" placeholder="输入答案" maxlength="7">
+            <input type="text" class="answer-input" id="answerInput" placeholder="Please type here" maxlength="7">
             <button class="submit-btn" id="submitBtn">Submit</button>
         </div>
         
-        <div class="third-line" id="thirdLine">Fine, please mapping.</div>
+        <div class="third-line" id="thirdLine">Fine, please be careful.</div>
         
         <div class="image-container" id="imageContainer">
-            <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEMOSFpMv8oWl1eiK0lLHnRNnOb7wABcQMAAvYnAAIUpJlVKcHjnj8X8tc2BA.jpg" 
-                 alt="test" class="result-image">
+            <img src="https://img.remit.ee/api/file/BQACAgUAAyEGAASHRsPbAAEMO0FpM4aGXvd5cDSngge15A3Doa--1AACLBcAAhSkoVVIzCtKqDt5EDYE.png" 
+                 alt="img" class="result-image">
         </div>
     </div>
 
@@ -178,7 +181,7 @@
         const thirdLine = document.getElementById('thirdLine');
         const imageContainer = document.getElementById('imageContainer');
         
-        // 正确答案
+        // 正确答案（区分大小写）
         const correctAnswer = '4FUNOFC';
         
         // 提交按钮点击事件
@@ -191,9 +194,9 @@
             }
         });
         
-        // 检查答案函数
+        // 检查答案函数（区分大小写）
         function checkAnswer() {
-            const userAnswer = answerInput.value.trim().toUpperCase();
+            const userAnswer = answerInput.value.trim(); // 不再转换为大写
             
             if (userAnswer === correctAnswer) {
                 // 显示第三行
@@ -205,7 +208,7 @@
                 // 输入框和按钮状态更新
                 answerInput.style.borderColor = '#4caf50';
                 answerInput.style.backgroundColor = '#f0fff0';
-                submitBtn.textContent = '正确!';
+                submitBtn.textContent = 'Correct!';
                 submitBtn.style.backgroundColor = '#4caf50';
             } else {
                 // 答案错误的效果
@@ -226,6 +229,17 @@
                 }, 800);
             }
         }
+        
+        // 添加震动动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
